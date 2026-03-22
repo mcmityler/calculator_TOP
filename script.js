@@ -6,19 +6,16 @@ let isNumberStarted = false; //clears screen when you start a new number
 
 
 function operate(num1, num2, operate){
+
     switch(operate){
         case "+":
-            addition(num1,num2);
-            break;
+            return addition(num1,num2);
         case "-":
-            subtraction(num1,num2);
-            break;
+            return subtraction(num1,num2);
         case "/":
-            division(num1,num2);
-            break;
+            return division(num1,num2);
         case "*":
-            multi(num1,num2);
-            break;
+            return multi(num1,num2);
     }
 }
 
@@ -35,14 +32,17 @@ function division(num1, num2){
     return +num1 / +num2;
 }
 function numPress(num){
-    if(numPressed == false){
-        numPressed = true;
+    if(isNumberStarted == false){
+        isNumberStarted = true;
         screenText.innerText = "";
     }
     screenText.innerText += num;
 }
 
 let screenText = document.querySelector(".screenText");
+
+
+//NUMBER BUTTONS
 let oneButton = document.querySelector("#numberOne");
 oneButton.addEventListener("click", () => numPress(1));
 
@@ -72,3 +72,37 @@ nineButton.addEventListener("click", () => numPress(9));
 
 let zeroButton = document.querySelector("#numberZero");
 zeroButton.addEventListener("click", () => numPress(0));
+
+//OPERATOR BUTTONS
+let addButton = document.querySelector(".add");
+addButton.addEventListener('click',  () => setOperator("+"));
+
+let subtractButton = document.querySelector(".subtract");
+subtractButton.addEventListener('click',  () => setOperator("-"));
+
+let multiButton = document.querySelector(".multi");
+multiButton.addEventListener('click',  () => setOperator("*"));
+
+let divideButton = document.querySelector(".divide");
+divideButton.addEventListener('click', () => setOperator("/"));
+
+function setOperator(opp){
+    if(operator === ""){
+        number1 = Number(screenText.textContent);
+        isNumberStarted = false;
+    }
+    operator = opp;
+    console.log(operator);
+}
+
+
+let equalButton = document.querySelector(".equals");
+equalButton.addEventListener('click',  () => equals());
+
+function equals(){
+    number2 = Number(screenText.textContent);
+    console.log(`num1: ${number1} num2: ${number2} operator: ${operator} calculation: ${operate(number1, number2, operator)}`)
+    screenText.textContent = operate(number1, number2, operator);
+    operator = "";
+    isNumberStarted = false;
+}
