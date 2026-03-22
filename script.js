@@ -2,6 +2,8 @@
 let number1 = 0;
 let number2 = 0;
 let operator = "";
+let isNumberStarted = false; //clears screen when you start a new number
+
 
 function operate(num1, num2, operate){
     switch(operate){
@@ -32,34 +34,41 @@ function multi(num1, num2){
 function division(num1, num2){
     return +num1 / +num2;
 }
+function numPress(num){
+    if(numPressed == false){
+        numPressed = true;
+        screenText.innerText = "";
+    }
+    screenText.innerText += num;
+}
 
 let screenText = document.querySelector(".screenText");
 let oneButton = document.querySelector("#numberOne");
-oneButton.addEventListener("click", () => screenText.innerText += "1")
+oneButton.addEventListener("click", () => numPress(1));
 
 let twoButton = document.querySelector("#numberTwo");
-twoButton.addEventListener("click", () => screenText.innerText += "2")
+twoButton.addEventListener("click", () => numPress(2));
 
 let threeButton = document.querySelector("#numberThree");
-threeButton.addEventListener("click", () => screenText.innerText += "3")
+threeButton.addEventListener("click", () => numPress(3));
 
 let fourButton = document.querySelector("#numberFour");
-fourButton.addEventListener("click", () => screenText.innerText += "4")
+fourButton.addEventListener("click", () => numPress(4));
 
 let fiveButton = document.querySelector("#numberFive");
-fiveButton.addEventListener("click", () => screenText.innerText += "5")
+fiveButton.addEventListener("click", () => numPress(5));
 
 let sixButton = document.querySelector("#numberSix");
-sixButton.addEventListener("click", () => screenText.innerText += "6")
+sixButton.addEventListener("click", () => numPress(6));
 
 let sevenButton = document.querySelector("#numberSeven");
-sevenButton.addEventListener("click", () => screenText.innerText += "7")
+sevenButton.addEventListener("click", () => numPress(7));
 
 let eightButton = document.querySelector("#numberEight");
-eightButton.addEventListener("click", () => screenText.innerText += "8")
+eightButton.addEventListener("click", () => numPress(8));
 
 let nineButton = document.querySelector("#numberNine");
-nineButton.addEventListener("click", () => screenText.innerText += "9")
+nineButton.addEventListener("click", () => numPress(9));
 
 let zeroButton = document.querySelector("#numberZero");
-zeroButton.addEventListener("click", () => screenText.innerText += "0")
+zeroButton.addEventListener("click", () => numPress(0));
