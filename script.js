@@ -103,7 +103,7 @@ divideButton.addEventListener('click', () => setOperator("/"));
 
 function setOperator(opp){
     if(isNumOne === true && isNumberStarted === false){
-        number1 = answer;
+        number1 = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
         number2 = 0;
         answer = 0;
     }
@@ -115,9 +115,9 @@ function setOperator(opp){
         //num2 has been started and another operator has been entered
         //make num 1 the answer and set new operator
         answer = operate(number1, number2, operator);
-        screenText.textContent = answer;
+        screenText.textContent = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
         isNumberStarted = false;
-        number1 = answer;
+        number1 = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
         answer = 0;
         number2 = 0;
     }
@@ -139,18 +139,18 @@ let lastOperator = "";
 
 function equals(){
     if(operator === "" && lastOperator !== "") {
-        number1 = answer;
+        number1 = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
         answer = operate(number1, number2, lastOperator);
         console.log(answer);
-        screenText.textContent = answer;
+        screenText.textContent = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
         highlightMini("equals");
         setMiniScreen(lastOperator);
         
         return;
     }; //stop it from being clicked multiple times and removing
     answer = operate(number1, number2, operator);
-    console.log(`num1: ${number1} num2: ${number2} operator: ${operator} calculation: ${answer}`)
-    screenText.textContent = answer;
+    console.log(`num1: ${number1} num2: ${number2} operator: ${operator} calculation: ${answer.toFixed(3)}`)
+    screenText.textContent = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
     lastOperator = operator;
     setMiniScreen();
     operator = "";
@@ -171,7 +171,8 @@ function setMiniScreen(lastOpp = ""){
     miniScreenNum1.innerText = `${number1} `
     miniScreenNum2.innerText = `${number2} `
     miniScreenOperator.innerText = `${operator === "" ? (lastOpp === "" ? "operator" : lastOperator ) : operator} `
-    miniScreenEquals.innerText = `= ${operate(number1, number2, operator === "" ? (lastOpp === "" ? "" : lastOperator ) : operator)}`
+    let tempAnswer = operate(number1, number2, operator === "" ? (lastOpp === "" ? "" : lastOperator ) : operator);
+    miniScreenEquals.innerText = `= ${hasMoreThanThreeDecimalsRegex(tempAnswer) === false ? tempAnswer: tempAnswer.toFixed(3)}`
 
     
 }
@@ -195,4 +196,21 @@ function highlightMini(stage){
             miniScreenEquals.classList.add("miniHighlight");
             break;
     }
+}
+
+function hasMoreThanThreeDecimalsRegex(value) {
+   // Convert the number to a string to handle decimal places accurately
+  const numberAsString = String(value);
+
+  // Check if the string contains a decimal point
+  if (numberAsString.includes('.')) {
+    // Split the string by the decimal point
+    const decimalPart = numberAsString.split('.')[1];
+
+    // Check if the length of the decimal part is greater than 3
+    return decimalPart.length > 3;
+  }
+
+  // If no decimal point, it has 0 decimal places, so return false
+  return false;
 }
