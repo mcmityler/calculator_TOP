@@ -3,7 +3,8 @@ let number1 = 0;
 let number2 = 0;
 let operator = "";
 let isNumberStarted = false; //clears screen when you start a new number
-
+let isNumOne = true; //mini screen to keep track of first or second number input
+let answer = 0;
 
 function operate(num1, num2, operate){
 
@@ -32,11 +33,25 @@ function division(num1, num2){
     return +num1 / +num2;
 }
 function numPress(num){
-    if(isNumberStarted == false){
+    if(isNumberStarted === false){
         isNumberStarted = true;
         screenText.innerText = "";
+        if(isNumOne === true){
+            number2 = 0;
+        }
     }
     screenText.innerText += num;
+    if(isNumOne){
+        number1 = Number(screenText.textContent);
+        highlightMini("num1");
+
+    }
+    else{
+        number2 = Number(screenText.textContent);
+        highlightMini("num2");
+    }
+    setMiniScreen();
+
 }
 
 let screenText = document.querySelector(".screenText");
@@ -87,11 +102,18 @@ let divideButton = document.querySelector(".divide");
 divideButton.addEventListener('click', () => setOperator("/"));
 
 function setOperator(opp){
+    if(isNumOne === true && isNumberStarted === false){
+        number1 = answer;
+        number2 = 0;
+    }
     if(operator === ""){
-        number1 = Number(screenText.textContent);
-        isNumberStarted = false;
+        isNumberStarted = false; //knows its now a new number
+        isNumOne = false; // now is entering the second number
     }
     operator = opp;
+   
+    setMiniScreen();
+    highlightMini("operator");
     console.log(operator);
 }
 
@@ -100,9 +122,50 @@ let equalButton = document.querySelector(".equals");
 equalButton.addEventListener('click',  () => equals());
 
 function equals(){
-    number2 = Number(screenText.textContent);
-    console.log(`num1: ${number1} num2: ${number2} operator: ${operator} calculation: ${operate(number1, number2, operator)}`)
-    screenText.textContent = operate(number1, number2, operator);
+    if(operator === "") return; //stop it from being clicked multiple times and removing answer
+    answer = operate(number1, number2, operator);
+    console.log(`num1: ${number1} num2: ${number2} operator: ${operator} calculation: ${answer}`)
+    screenText.textContent = answer;
     operator = "";
     isNumberStarted = false;
+    isNumOne = true;
+    highlightMini("equals");
+
+}
+
+
+let miniScreenText = document.querySelector(".miniScreenText");
+let miniScreenNum1 = document.querySelector(".miniNum1");
+let miniScreenNum2 = document.querySelector(".miniNum2");
+let miniScreenOperator = document.querySelector(".miniOperator");
+let miniScreenEquals = document.querySelector(".miniEquals");
+
+function setMiniScreen(){
+    miniScreenNum1.innerText = `${number1} `
+    miniScreenNum2.innerText = `${number2} `
+    miniScreenOperator.innerText = `${operator === "" ? "operator" : operator} `
+    miniScreenEquals.innerText = `= ${operate(number1, number2, operator)}`
+
+    
+}
+function highlightMini(stage){
+    miniScreenEquals.classList.remove("miniHighlight");
+    miniScreenOperator.classList.remove("miniHighlight");
+    miniScreenNum1.classList.remove("miniHighlight");
+    miniScreenNum2.classList.remove("miniHighlight");
+
+    switch(stage){
+        case "num1":
+            miniScreenNum1.classList.add("miniHighlight");
+            break;
+            case "operator":
+            miniScreenOperator.classList.add("miniHighlight");
+                break;
+            case "num2":
+            miniScreenNum2.classList.add("miniHighlight");
+            break;
+        case "equals":
+            miniScreenEquals.classList.add("miniHighlight");
+            break;
+    }
 }
