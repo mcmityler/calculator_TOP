@@ -3,6 +3,12 @@
     margin: 0;
     padding: 0;
 }
+.contianer{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
 .calculator{
     width: 500px;
     height: 600px;
@@ -35,6 +41,9 @@
     align-items: center;
     padding-right: 10px;
     overflow: hidden; 
+}
+.miniScreenText span{
+    padding: 0 3px;
 }
 .buttons{
     width: 80%;

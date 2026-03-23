@@ -122,7 +122,7 @@ let equalButton = document.querySelector(".equals");
 equalButton.addEventListener('click',  () => equals());
 
 function equals(){
-    if(operator === "") return; //stop it from being clicked multiple times and removing answer
+    if(operator === "") return; //stop it from being clicked multiple times and removing
     answer = operate(number1, number2, operator);
     console.log(`num1: ${number1} num2: ${number2} operator: ${operator} calculation: ${answer}`)
     screenText.textContent = answer;
