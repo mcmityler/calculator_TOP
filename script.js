@@ -105,27 +105,54 @@ function setOperator(opp){
     if(isNumOne === true && isNumberStarted === false){
         number1 = answer;
         number2 = 0;
+        answer = 0;
     }
     if(operator === ""){
         isNumberStarted = false; //knows its now a new number
         isNumOne = false; // now is entering the second number
     }
+    if(isNumOne === false && isNumberStarted === true){
+        //num2 has been started and another operator has been entered
+        //make num 1 the answer and set new operator
+        answer = operate(number1, number2, operator);
+        screenText.textContent = answer;
+        isNumberStarted = false;
+        number1 = answer;
+        answer = 0;
+        number2 = 0;
+    }
     operator = opp;
    
+    
+
     setMiniScreen();
     highlightMini("operator");
     console.log(operator);
+    
 }
 
 
 let equalButton = document.querySelector(".equals");
 equalButton.addEventListener('click',  () => equals());
 
+let lastOperator = "";
+
 function equals(){
-    if(operator === "") return; //stop it from being clicked multiple times and removing
+    if(operator === "" && lastOperator !== "") {
+        number1 = answer;
+        answer = operate(number1, number2, lastOperator);
+        console.log(answer);
+        screenText.textContent = answer;
+        highlightMini("equals");
+        setMiniScreen(lastOperator);
+        
+        return;
+    }; //stop it from being clicked multiple times and removing
     answer = operate(number1, number2, operator);
     console.log(`num1: ${number1} num2: ${number2} operator: ${operator} calculation: ${answer}`)
     screenText.textContent = answer;
+    lastOperator = operator;
+    setMiniScreen();
     operator = "";
     isNumberStarted = false;
     isNumOne = true;
@@ -140,11 +167,11 @@ let miniScreenNum2 = document.querySelector(".miniNum2");
 let miniScreenOperator = document.querySelector(".miniOperator");
 let miniScreenEquals = document.querySelector(".miniEquals");
 
-function setMiniScreen(){
+function setMiniScreen(lastOpp = ""){
     miniScreenNum1.innerText = `${number1} `
     miniScreenNum2.innerText = `${number2} `
-    miniScreenOperator.innerText = `${operator === "" ? "operator" : operator} `
-    miniScreenEquals.innerText = `= ${operate(number1, number2, operator)}`
+    miniScreenOperator.innerText = `${operator === "" ? (lastOpp === "" ? "operator" : lastOperator ) : operator} `
+    miniScreenEquals.innerText = `= ${operate(number1, number2, operator === "" ? (lastOpp === "" ? "" : lastOperator ) : operator)}`
 
     
 }
