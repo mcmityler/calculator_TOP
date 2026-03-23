@@ -47,12 +47,21 @@ function division(num1, num2){
     return +num1 / +num2;
 }
 function numPress(num){
+    if(num === "." && hasDecimal === true) return;
+    
+
     if(isNumberStarted === false){
         isNumberStarted = true;
         screenText.innerText = "";
         if(isNumOne === true){
             number2 = 0;
         }
+    }
+    if(num === "."){
+        if(screenText.innerText === ""){ //without it isnt a real number if pressed alone
+            screenText.innerText += "0";
+        }
+        hasDecimal= true;
     }
     screenText.innerText += num;
     if(isNumOne){
@@ -65,8 +74,8 @@ function numPress(num){
         highlightMini("num2");
         console.log("test");
     }
+  
     setMiniScreen();
-    removeOperatorHighlight();
 
 }
 
@@ -120,12 +129,15 @@ divideButton.addEventListener('click', () => setOperator("/"));
 function setOperator(opp){
     if(isNumOne === true && isNumberStarted === false){
         number1 = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
+        hasDecimal = false;
         number2 = 0;
         answer = 0;
     }
     if(operator === ""){
         isNumberStarted = false; //knows its now a new number
         isNumOne = false; // now is entering the second number
+        hasDecimal = false;
+
     }
     if(isNumOne === false && isNumberStarted === true){
         //num2 has been started and another operator has been entered
@@ -136,6 +148,8 @@ function setOperator(opp){
         number1 = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
         answer = 0;
         number2 = 0;
+        hasDecimal = false;
+
     }
     operator = opp;
    
@@ -161,7 +175,6 @@ function equals(){
         screenText.textContent = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
         highlightMini("equals");
         setMiniScreen(lastOperator);
-        removeOperatorHighlight();
         
         return;
     }; //stop it from being clicked multiple times and removing
@@ -174,7 +187,6 @@ function equals(){
     isNumberStarted = false;
     isNumOne = true;
     highlightMini("equals");
-    removeOperatorHighlight();
 
 }
 
@@ -239,6 +251,7 @@ clearButton.addEventListener('click', () => clearCalc());
 function clearCalc(){
     number1 = 0;
     number2 = 0;
+    hasDecimal = false;
     operator = "";
     answer = 0;
     isNumOne = true;
@@ -247,3 +260,8 @@ function clearCalc(){
     highlightMini("num1");
     screenText.textContent = "";
 }
+
+
+let decimalButton = document.querySelector(".decimalButton");
+decimalButton.addEventListener('click', () => numPress("."));
+let hasDecimal = false;
