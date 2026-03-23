@@ -214,3 +214,18 @@ function hasMoreThanThreeDecimalsRegex(value) {
   // If no decimal point, it has 0 decimal places, so return false
   return false;
 }
+
+let clearButton = document.querySelector(".clearButton");
+clearButton.addEventListener('click', () => clearCalc());
+
+function clearCalc(){
+    number1 = 0;
+    number2 = 0;
+    operator = "";
+    answer = 0;
+    isNumOne = true;
+    isNumberStarted = false;
+    setMiniScreen();
+    highlightMini("num1");
+    screenText.textContent = "";
+}
