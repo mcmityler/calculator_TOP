@@ -47,26 +47,26 @@ function division(num1, num2){
     return +num1 / +num2;
 }
 function numPress(num){
-    if(num === "." && hasDecimal === true) return;
+    if(num === "." && screenText.innerText.includes(".") === true && (isNumOne == false && String(number2).includes(".") === true)) return;
     
 
     if(isNumberStarted === false){
         isNumberStarted = true;
         screenText.innerText = "";
-        if(isNumOne === true){
-            number2 = 0;
-        }
     }
     if(num === "."){
         if(screenText.innerText === ""){ //without it isnt a real number if pressed alone
             screenText.innerText += "0";
         }
-        hasDecimal= true;
     }
     screenText.innerText += num;
     if(isNumOne){
         number1 = Number(screenText.textContent);
         highlightMini("num1");
+        number2 = 0;
+        answer = 0;
+        lastOperator = "";
+        operator = "";
 
     }
     else{
@@ -129,14 +129,12 @@ divideButton.addEventListener('click', () => setOperator("/"));
 function setOperator(opp){
     if(isNumOne === true && isNumberStarted === false){
         number1 = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
-        hasDecimal = false;
         number2 = 0;
         answer = 0;
     }
     if(operator === ""){
         isNumberStarted = false; //knows its now a new number
         isNumOne = false; // now is entering the second number
-        hasDecimal = false;
 
     }
     if(isNumOne === false && isNumberStarted === true){
@@ -148,7 +146,6 @@ function setOperator(opp){
         number1 = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
         answer = 0;
         number2 = 0;
-        hasDecimal = false;
 
     }
     operator = opp;
@@ -178,6 +175,10 @@ function equals(){
         
         return;
     }; //stop it from being clicked multiple times and removing
+    if(operator === "" && lastOperator === ""){
+        screenText.textContent = "No operator selected"
+        return;
+    }
     answer = operate(number1, number2, operator);
     console.log(`num1: ${number1} num2: ${number2} operator: ${operator} calculation: ${answer.toFixed(3)}`)
     screenText.textContent = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
@@ -251,7 +252,6 @@ clearButton.addEventListener('click', () => clearCalc());
 function clearCalc(){
     number1 = 0;
     number2 = 0;
-    hasDecimal = false;
     operator = "";
     answer = 0;
     isNumOne = true;
@@ -259,9 +259,9 @@ function clearCalc(){
     setMiniScreen();
     highlightMini("num1");
     screenText.textContent = "";
+    lastOperator = ""
 }
 
 
 let decimalButton = document.querySelector(".decimalButton");
 decimalButton.addEventListener('click', () => numPress("."));
-let hasDecimal = false;
