@@ -6,16 +6,30 @@ let isNumberStarted = false; //clears screen when you start a new number
 let isNumOne = true; //mini screen to keep track of first or second number input
 let answer = 0;
 
+function removeOperatorHighlight(){
+     addButton.classList.remove("operatorHighlight");
+    multiButton.classList.remove("operatorHighlight");
+    divideButton.classList.remove("operatorHighlight");
+    subtractButton.classList.remove("operatorHighlight");
+    console.log("remove highlight")
+}
+
 function operate(num1, num2, operate){
+    
+    removeOperatorHighlight();
 
     switch(operate){
         case "+":
+            addButton.classList.add("operatorHighlight");
             return addition(num1,num2);
         case "-":
+            subtractButton.classList.add("operatorHighlight");
             return subtraction(num1,num2);
         case "/":
+            divideButton.classList.add("operatorHighlight");
             return division(num1,num2);
         case "*":
+            multiButton.classList.add("operatorHighlight");
             return multi(num1,num2);
     }
 }
@@ -49,8 +63,10 @@ function numPress(num){
     else{
         number2 = Number(screenText.textContent);
         highlightMini("num2");
+        console.log("test");
     }
     setMiniScreen();
+    removeOperatorHighlight();
 
 }
 
@@ -145,6 +161,7 @@ function equals(){
         screenText.textContent = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
         highlightMini("equals");
         setMiniScreen(lastOperator);
+        removeOperatorHighlight();
         
         return;
     }; //stop it from being clicked multiple times and removing
@@ -157,6 +174,7 @@ function equals(){
     isNumberStarted = false;
     isNumOne = true;
     highlightMini("equals");
+    removeOperatorHighlight();
 
 }
 

@@ -94,3 +94,6 @@
 .miniHighlight{
     color: blueviolet;
 }
+.operatorHighlight{
+    background-color: darkolivegreen;
+}
