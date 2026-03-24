@@ -59,7 +59,12 @@ function numPress(num){
             screenText.innerText += "0";
         }
     }
-    screenText.innerText += num;
+    if(num !== "." && screenText.innerText === "0"){
+        screenText.innerText = num;
+    }
+    else{
+        screenText.innerText += num;
+    }
     if(isNumOne){
         number1 = Number(screenText.textContent);
         highlightMini("num1");
@@ -138,7 +143,7 @@ function setOperator(opp){
 
     }
     if(isNumOne === false && isNumberStarted === true){
-        //num2 has been started and another operator has been entered
+        //another operator has been entered after the second number has been entered..
         //make num 1 the answer and set new operator
         answer = operate(number1, number2, operator);
         screenText.textContent = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
@@ -260,8 +265,38 @@ function clearCalc(){
     highlightMini("num1");
     screenText.textContent = "";
     lastOperator = ""
+    removeOperatorHighlight();
 }
 
 
 let decimalButton = document.querySelector(".decimalButton");
 decimalButton.addEventListener('click', () => numPress("."));
+
+let backButton = document.querySelector(".backButton");
+backButton.addEventListener('click', () => backClick());
+
+function backClick(){
+    if(miniScreenEquals.classList.contains("miniHighlight")){
+        clearCalc();
+        return;
+    }
+    currentText = screenText.textContent.split("");
+    if(currentText.length > 0){
+        currentText.pop()
+        currentText = currentText.join("")
+        console.log(currentText)
+    }
+    if(currentText === ""){ //set to 0 when you remove all numbers 
+        currentText = "0";
+    }
+    //check if it is number one or two to update the number
+    if(isNumOne === true){
+        number1 = Number(currentText);
+    }
+    else{
+        number2 = Number(currentText);
+    }
+    setMiniScreen();
+    screenText.textContent = currentText;
+
+}
