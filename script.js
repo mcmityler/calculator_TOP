@@ -12,7 +12,7 @@ function removeOperatorHighlight(){
     divideButton.classList.remove("operatorHighlight");
     subtractButton.classList.remove("operatorHighlight");
     exponentButton.classList.remove("operatorHighlight");
-    console.log("remove highlight")
+    // console.log("remove highlight")
 }
 
 function operate(num1, num2, operate){
@@ -84,7 +84,7 @@ function numPress(num){
     else{
         number2 = Number(screenText.textContent);
         highlightMini("num2");
-        console.log("test");
+        // console.log("test");
     }
   
     setMiniScreen();
@@ -168,7 +168,7 @@ function setOperator(opp){
 
     setMiniScreen();
     highlightMini("operator");
-    console.log(operator);
+    // console.log(operator);
     
 }
 
@@ -182,7 +182,7 @@ function equals(){
     if(operator === "" && lastOperator !== "") {
         number1 = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
         answer = operate(number1, number2, lastOperator);
-        console.log(answer);
+        // console.log(answer);
         screenText.textContent = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
         highlightMini("equals");
         setMiniScreen(lastOperator);
@@ -194,7 +194,7 @@ function equals(){
         return;
     }
     answer = operate(number1, number2, operator);
-    console.log(`num1: ${number1} num2: ${number2} operator: ${operator} calculation: ${answer.toFixed(3)}`)
+    // console.log(`num1: ${number1} num2: ${number2} operator: ${operator} calculation: ${answer.toFixed(3)}`)
     screenText.textContent = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
     lastOperator = operator;
     setMiniScreen();
@@ -298,7 +298,7 @@ function backClick(){
     if(currentText.length > 0){
         currentText.pop()
         currentText = currentText.join("")
-        console.log(currentText)
+        // console.log(currentText)
     }
     if(currentText === ""){ //set to 0 when you remove all numbers 
         currentText = "0";
