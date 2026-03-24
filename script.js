@@ -140,7 +140,6 @@ function setOperator(opp){
     if(operator === ""){
         isNumberStarted = false; //knows its now a new number
         isNumOne = false; // now is entering the second number
-
     }
     if(isNumOne === false && isNumberStarted === true){
         //another operator has been entered after the second number has been entered..
@@ -277,6 +276,7 @@ backButton.addEventListener('click', () => backClick());
 
 function backClick(){
     if(miniScreenEquals.classList.contains("miniHighlight")){
+        // clears calculator so you dont try and erase the answer
         clearCalc();
         return;
     }
@@ -300,3 +300,59 @@ function backClick(){
     screenText.textContent = currentText;
 
 }
+
+//KEYBOARD EVENT LISTENER
+document.addEventListener('keydown', (event) => {
+    switch(event.key){
+        case '1':
+            numPress(1);
+            break;
+        case '2':
+            numPress(2);
+            break;
+        case '3':
+            numPress(3);
+            break;
+        case '4':
+            numPress(4);
+            break;
+        case '5':
+            numPress(5);
+            break;
+        case '6':
+            numPress(6);
+            break;
+        case '7':
+            numPress(7);
+            break;
+        case '8':
+            numPress(8);
+            break;
+        case '9':
+            numPress(9);
+            break;
+        case '0':
+            numPress(0);
+            break;
+        case '+':
+            setOperator("+");
+            break;
+        case '-':
+            setOperator("-");
+            break;
+        case '*':
+            setOperator("*");
+            break;
+        case '/':
+            setOperator("/");
+            break;
+        case '=':
+        case 'Enter':
+            equals();
+            break;
+        case "Backspace":
+            backClick();
+            break;
+        
+    }
+});
