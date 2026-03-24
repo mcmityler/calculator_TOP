@@ -11,6 +11,7 @@ function removeOperatorHighlight(){
     multiButton.classList.remove("operatorHighlight");
     divideButton.classList.remove("operatorHighlight");
     subtractButton.classList.remove("operatorHighlight");
+    exponentButton.classList.remove("operatorHighlight");
     console.log("remove highlight")
 }
 
@@ -31,6 +32,9 @@ function operate(num1, num2, operate){
         case "*":
             multiButton.classList.add("operatorHighlight");
             return multi(num1,num2);
+        case "**":
+            exponentButton.classList.add("operatorHighlight");
+            return expo(num1, num2);
     }
 }
 
@@ -45,6 +49,9 @@ function multi(num1, num2){
 }
 function division(num1, num2){
     return +num1 / +num2;
+}
+function expo(num1, num2){
+    return (+num1) ** +num2;
 }
 function numPress(num){
     if(num === "." && screenText.innerText.includes(".") === true && (isNumOne == false && String(number2).includes(".") === true)) return;
@@ -131,6 +138,9 @@ multiButton.addEventListener('click',  () => setOperator("*"));
 let divideButton = document.querySelector(".divide");
 divideButton.addEventListener('click', () => setOperator("/"));
 
+let exponentButton = document.querySelector(".exponent");
+exponentButton.addEventListener('click', () => setOperator("**"));
+
 function setOperator(opp){
     if(isNumOne === true && isNumberStarted === false){
         number1 = hasMoreThanThreeDecimalsRegex(answer) === false ? answer: answer.toFixed(3);
@@ -205,7 +215,11 @@ let miniScreenEquals = document.querySelector(".miniEquals");
 function setMiniScreen(lastOpp = ""){
     miniScreenNum1.innerText = `${number1} `
     miniScreenNum2.innerText = `${number2} `
-    miniScreenOperator.innerText = `${operator === "" ? (lastOpp === "" ? "operator" : lastOperator ) : operator} `
+    if(operator == "**" || (operator == "" && lastOperator =="**")){
+        miniScreenOperator.innerHTML = "^";
+    }else{
+        miniScreenOperator.innerText = `${operator === "" ? (lastOpp === "" ? "operator" : lastOperator ) : operator} `
+    }
     let tempAnswer = operate(number1, number2, operator === "" ? (lastOpp === "" ? "" : lastOperator ) : operator);
     miniScreenEquals.innerText = `= ${hasMoreThanThreeDecimalsRegex(tempAnswer) === false ? tempAnswer: tempAnswer.toFixed(3)}`
 
@@ -260,10 +274,10 @@ function clearCalc(){
     answer = 0;
     isNumOne = true;
     isNumberStarted = false;
+    lastOperator = ""
     setMiniScreen();
     highlightMini("num1");
     screenText.textContent = "";
-    lastOperator = ""
     removeOperatorHighlight();
 }
 
