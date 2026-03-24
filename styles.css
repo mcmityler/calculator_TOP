@@ -7,10 +7,10 @@
 }
 .contianer{
     display: flex;
-    height: 100vh;
+    height: 95vh;
     justify-content: center;
     align-items: center;
-    background-color: #dddcc9;
+    background-image: linear-gradient(#cccbb8 98%, #36064D);
 
 }
 .calculator{
@@ -146,4 +146,15 @@ button>span{
 }
 .clearButton:active{
     background-color: #DA4848;
+}
+.footer{
+    height: 5vh;
+    width: 100vw;
+    background-color: #36064D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.footer-text{
+    color: #F7F6E5;
 }
