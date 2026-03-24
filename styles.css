@@ -36,6 +36,9 @@ button:hover{
     color: #F7F6E5;
     background-color: #DA4848;
 }
+button:active{
+    background-color: #a31212;
+}
 button>span{
     color: inherit;
 
@@ -140,4 +143,7 @@ button>span{
 }
 .clearButton:hover{
     background-color: #a31212;
+}
+.clearButton:active{
+    background-color: #DA4848;
 }
