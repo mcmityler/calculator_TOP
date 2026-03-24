@@ -125,7 +125,7 @@ button>span{
     background-color: #DA4848;
 }
 .operatorHighlight{
-    background-color: #aa1919 !important;
+    background-color: #a31212 !important;
     color:#F7F6E5 !important;
 
 }
@@ -133,4 +133,11 @@ button>span{
     font-size: 0.6em;
     position:relative;
     top: -10px;
+}
+.clearButton{
+    color: #F7F6E5;
+    background-color: #DA4848;
+}
+.clearButton:hover{
+    background-color: #a31212;
 }
