@@ -1,13 +1,17 @@
 *{
-    outline: 1px solid red;
+    /* outline: 1px solid red; */
     margin: 0;
     padding: 0;
+    color: #36064D;
+    font-size: 1rem;
 }
 .contianer{
     display: flex;
     height: 100vh;
     justify-content: center;
     align-items: center;
+    background-color: #F7F6E5;
+
 }
 .calculator{
     width: 500px;
@@ -16,11 +20,33 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    border-radius: 20px;
+    background-color: #76D2DB;
+    border: 2px solid #36064D;
+    padding: 20px;
+    box-shadow: 5px 5px 10px 5px #36064D;
+
+}
+button{
+    border-radius: 10px;
+    background-color: #F7F6E5;
+    border: 1px solid #36064D;
+}
+button:hover{
+    color: #F7F6E5;
+    background-color: #DA4848;
+}
+button>span{
+    color: inherit;
+
 }
 .screen{
     width: 80%;
     height: 15%;
-    padding: 10px;
+    padding: 5px 10px 0 0;
+    background-color: #F7F6E5;
+    border-radius: 10px;
+    border: 2px solid #36064D;
 }
 .screenText{
     height: 80%;
@@ -40,7 +66,10 @@
     justify-content: flex-end;
     align-items: center;
     padding-right: 10px;
+    padding-bottom: 2px;
     overflow: hidden; 
+    border-bottom: 2px solid #36064D;
+    
 }
 .miniScreenText span{
     padding: 0 3px;
@@ -92,10 +121,13 @@
     height: 12%;
 }
 .miniHighlight{
-    color: blueviolet;
+    color: #F7F6E5;
+    background-color: #DA4848;
 }
 .operatorHighlight{
-    background-color: darkolivegreen;
+    background-color: #aa1919 !important;
+    color:#F7F6E5 !important;
+
 }
 .exponentText{
     font-size: 0.6em;
